@@ -1,0 +1,6 @@
+path,label,source_type
+samples/genuine.wav,0,genuine
+samples/tts.wav,1,text_to_speech
+samples/voice_conversion.wav,1,voice_conversion
+samples/cloned_speech.wav,1,voice_cloned
+samples/recorded_playback.wav,1,recorded_playback

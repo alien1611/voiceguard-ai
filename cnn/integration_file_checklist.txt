@@ -1,0 +1,147 @@
+VOICE SPOOF / AUDIO DEEPFAKE DETECTOR
+INTEGRATION FILE CHECKLIST
+================================
+
+PROJECT ROOT
+------------
+Keep the following files in the main cnn/ project folder.
+
+A. REQUIRED AT INFERENCE / INTEGRATION TIME
+-------------------------------------------
+These files are required for the current detector interface:
+
+1. detector.py
+   Main inference interface. Teammates call VoiceSpoofDetector.predict(audio_path).
+
+2. cnn_model.py
+   Defines the AudioCNN architecture. Must match the architecture used to train the checkpoint.
+
+3. audio_preprocessing.py
+   Loads audio and applies the current preprocessing (16 kHz expected; 4-second crop/padding).
+
+4. lfcc_extractor.py
+   Extracts LFCC features. Must remain consistent with training.
+
+5. best_audio_cnn.pth
+   Trained model weights loaded by detector.py.
+
+6. normalized_train.npz
+   Contains training mean and standard deviation used to normalize LFCC features.
+   Required by the current detector.py implementation.
+
+B. REQUIRED FOR TRAINING / RE-TRAINING
+--------------------------------------
+Keep these if the team needs to reproduce or improve the model:
+
+7. dataset_loader.py
+   Reads ASVspoof protocol files and maps bonafide=0, spoof=1.
+
+8. prepare_data.py
+   Builds PyTorch Dataset and DataLoader objects from normalized feature files.
+
+9. train.py
+   Trains the CNN and saves model checkpoints.
+
+10. evaluate_model.py
+    Evaluates the trained model on the development DataLoader.
+
+11. batch_extraction.py
+    Extracts training LFCC features in batches.
+
+12. dev_extraction.py
+    Extracts development/validation LFCC features.
+
+13. normalize_features.py
+    Calculates training normalization statistics and saves normalized training features.
+
+14. normalize_dev.py
+    Applies the training normalization statistics to development features.
+
+15. extract_features.py
+    Earlier/general feature extraction workflow; retain while checking whether it is still used.
+
+C. KEEP THESE DATA / MODEL ASSETS
+---------------------------------
+16. LA/
+    Original ASVspoof 2019 LA dataset, including audio and protocol files.
+    Needed for dataset-based training/evaluation, not normal inference.
+
+17. train_features_balanced_batches/
+    Extracted balanced training feature batches. Keep to avoid repeating extraction.
+
+18. dev_features_batches/
+    Extracted development feature batch. Keep for validation experiments.
+
+19. normalized_dev.npz
+    Normalized development features. Needed for the current validation workflow, not normal inference.
+
+D. INTEGRATION TEST AND DOCUMENTATION
+-------------------------------------
+20. test_detector.py
+    Smoke test for the detector interface. Keep and run before handover.
+
+21. README.md
+    Create this file. Document setup, dependencies, input format, sample rate, duration,
+    output fields, threshold, and known limitations.
+
+E. USEFUL DEVELOPMENT / DIAGNOSTIC FILES
+----------------------------------------
+Keep these in an experiments/ folder if you want to preserve your development work.
+They are not required by the current inference interface:
+
+- analyse_lfcc.py
+- check_audio_files.py
+- check_filterbank.py
+- check_labels.py
+- inspect_audio.py
+- inspect_dataset.py
+- inspect_features.py
+- inspect_lfcc_classes.py
+- inspect_protocol.py
+- test_model.py
+- visualize_filterbank.py
+- training_setup.py
+
+F. ARCHIVE / REVIEW BEFORE REMOVING
+-----------------------------------
+- audio_cnn.pth
+  Earlier/final-epoch checkpoint. Archive; current detector loads best_audio_cnn.pth.
+
+- torch_dataset.py
+  Older/alternative dataset loader. Archive if prepare_data.py is the active workflow.
+
+Do not delete these until you confirm no script imports or uses them.
+
+IMPORTANT INTEGRATION NOTES
+---------------------------
+- The current inference interface uses detector.py, cnn_model.py, audio_preprocessing.py,
+  lfcc_extractor.py, best_audio_cnn.pth, and normalized_train.npz.
+- The input currently must be compatible with the preprocessing code: 16 kHz audio.
+  The preprocessing code crops or pads to 4 seconds.
+- Current supported dataset audio is FLAC. WAV support should be tested before promising it.
+- The model returns a spoof score produced by sigmoid(logit). It is a model score,
+  not a calibrated probability.
+- Current threshold is 0.5: score >= 0.5 => SPOOF; otherwise => BONAFIDE.
+- Current prototype result: 75% accuracy on a selected balanced validation sample
+  of 100 recordings (50 bonafide, 50 spoof). This is an initial experiment, not
+  evidence of production or real-world reliability.
+- Keep preprocessing, LFCC settings, normalization statistics, and CNN architecture
+  identical between training and inference.
+- The original dataset and feature batches are not needed by the inference application,
+  but should be retained for reproducibility and future training.
+
+SUGGESTED HANDOVER PACKAGE
+--------------------------
+detector.py
+cnn_model.py
+audio_preprocessing.py
+lfcc_extractor.py
+best_audio_cnn.pth
+normalized_train.npz
+README.md
+test_detector.py
+
+Before handing over, run:
+    python test_detector.py
+
+Then verify the returned prediction and score, and test an invalid file path.

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voiceguard-integration"
+version = "0.1.0"
+description = "Portable audio deepfake detection and risk-assessment module"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "scipy",
+    "soundfile",
+    "torch",
+]
+
+[project.optional-dependencies]
+microphone = ["sounddevice"]
+
+[tool.setuptools]
+packages = ["voiceguard", "voiceguard_models"]
+
+[tool.setuptools.package-dir]
+voiceguard_models = "models"
+
+[tool.setuptools.package-data]
+voiceguard_models = ["*.pth", "*.npz", "*.npy", "*.json", "README.md"]

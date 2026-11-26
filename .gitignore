@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Node / Frontend builds
+node_modules/
+dist/
+.next/
+out/
+
+# Environment & Secret Protection (keep .env.example templates only)
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.secret
+*.sqlite
+*.sqlite3
+*.db
+
+# Offline datasets & extracted features (not tracked in git)
+datasets/
+features_full/
+features (2)/
+metadata/
+cnn/normalized_*.npz
+cnn/*_batches/
+cnn/checkpoints/
+
+# Ad-hoc local audit/debug scripts & scratch artifacts
+frontend/src/test_marker.txt
+backend/tests/analyze_lfcc_dist.py
+backend/tests/asvspoof_logit_dist.py
+backend/tests/asvspoof_train_logit_dist.py
+backend/tests/audit_asvspoof_protocol.py
+backend/tests/audit_audio_metadata.py
+backend/tests/audit_duplicates_and_overlap.py
+backend/tests/audit_metadata_match.py
+backend/tests/audit_zero_bytes.py
+backend/tests/breakdown_logits.py
+backend/tests/check_asv_enrollment.py
+backend/tests/compare_inference.py
+backend/tests/compare_lfcc_stats.py
+backend/tests/evaluate_live_audio.py
+backend/tests/inspect_first4s.py
+backend/tests/spectral_analysis.py
+backend/tests/test_silence_and_noise.py
+backend/tests/test_sliding_children.py
+backend/tests/test_sliding_speech.py
+backend/tests/test_sliding_windows.py
+backend/tests/trace_cnn_layers.py
+backend/tests/verify_new_model_benchmark.py
+backend/tests/verify_phase9_upload_only.py
+backend/tests/verify_subset_relationship.py
+
+# Logs & OS artifacts
+*.log
+.DS_Store
+Thumbs.db

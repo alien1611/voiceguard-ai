@@ -1,0 +1,51 @@
+{
+  "model": "AudioCNN fine-tuned from best_audio_cnn_22k.pth",
+  "checkpoint": "best_audio_cnn_itw_speaker_weighted.pth",
+  "checkpoint_sha256": "12c4605dce7cad193c4cb22c8b4543a0e5268a7212fe5fbf35dc20a23c0ba2cf",
+  "normalization_stats": "normalization_stats_22k.npz",
+  "normalization_stats_sha256": "39c95865809ac6b4cc72dd2fb4264a866bbecbd070e2356f28f34825acf39182",
+  "threshold_file": "calibrated_threshold_itw_speaker_weighted.npy",
+  "threshold_type": "raw logit",
+  "threshold_logit": 0.15903852880001068,
+  "threshold_selection": "Maximum balanced accuracy on concatenated ASV dev2k and InTheWild validation scores only",
+  "validation_balanced_accuracy_at_selected_threshold": 0.8752988686306331,
+  "lfcc": {
+    "sample_rate": 16000,
+    "frame_length": 400,
+    "hop_length": 160,
+    "n_fft": 512,
+    "num_filters": 60,
+    "feature_shape": [
+      60,
+      398
+    ]
+  },
+  "training": {
+    "seed": 42,
+    "epochs_run": 8,
+    "best_epoch": 8,
+    "best_mean_domain_validation_loss": 0.2663908491267404,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "patience": 3,
+    "batch_size": 32,
+    "gain_augmentation_db": [
+      -6.0,
+      6.0
+    ],
+    "speaker_weighting": {
+      "method": "inverse square-root speaker count, normalized to mean 1 per class",
+      "speakers": 27,
+      "minimum_recordings_per_speaker": 14,
+      "maximum_recordings_per_speaker": 3625,
+      "minimum_sample_weight": 0.47339192032814026,
+      "maximum_sample_weight": 8.980462074279785
+    },
+    "class_counts": {
+      "bonafide": 11962,
+      "spoof": 25914
+    },
+    "elapsed_seconds": 1539.7072591000033
+  },
+  "evaluation_csv": "evaluation_comparison_itw_speaker_weighted.csv"
+}

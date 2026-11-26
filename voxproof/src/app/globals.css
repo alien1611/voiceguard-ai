@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-archivo: 'Archivo', sans-serif;
+  --font-instrument: 'Instrument Serif', serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+}
+
+html {
+  background-color: #0A0A0B;
+  color: #FFFFFF;
+  scroll-behavior: auto; /* Handled smoothly by Lenis */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0A0A0B;
+  color: #FFFFFF;
+  font-family: var(--font-archivo), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: #C6FF3D;
+  color: #0A0A0B;
+}
+
+/* Custom Scrollbar for dark pro theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0B;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A1A1D;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3A3A40;
+}
+
+/* Focus styles matching WCAG AA with 2px lime ring */
+:focus-visible {
+  outline: 2px solid #C6FF3D !important;
+  outline-offset: 2px !important;
+}
+
+/* Text Mask Reveal animation helper */
+.mask-reveal {
+  overflow: hidden;
+}
+.mask-reveal > * {
+  transform: translateY(110%);
+  animation: revealUp 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes revealUp {
+  0% {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
